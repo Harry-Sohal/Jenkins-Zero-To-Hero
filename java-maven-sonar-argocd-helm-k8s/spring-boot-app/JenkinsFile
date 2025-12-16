@@ -2,14 +2,18 @@ pipeline {
   agent {
     docker {
       image 'maven:3.9.9-eclipse-temurin-17'
-      args '--user 1000:1000 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+      args '-u root:root' // mount Docker socket to access the host's Docker daemon
+      reuseNode true
     }
   }
+  options {
+     skipDefaultCheckout(true)
+    }
   stages {
     stage('Checkout') {
       steps {
-        sh 'echo passed'
-        //git branch: 'main', url: 'https://github.com/iam-veeramalla/Jenkins-Zero-To-Hero.git'
+          git branch: 'main', 
+              url: 'https://github.com/Harry-Sohal/Jenkins-Zero-To-Hero.git'
       }
     }
     stage('Build and Test') {
