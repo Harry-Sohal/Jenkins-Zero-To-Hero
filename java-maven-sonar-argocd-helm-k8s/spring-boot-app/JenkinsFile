@@ -21,9 +21,9 @@ pipeline {
            cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
            # Kill any running jar
            pkill -f spring-boot-web.jar || true
-           # Remove target folder as root
-           docker run --rm -v $(pwd):/app -w /app --user root harpreet2001/maven-abhishek-docker-agent:v3 rm -rf target
-           # Build project
+           # Delete target folder safely
+           rm -rf target
+           # Build the project
            mvn clean package
            '''
       }
