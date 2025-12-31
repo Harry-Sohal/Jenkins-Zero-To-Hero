@@ -18,12 +18,13 @@ pipeline {
         sh 'ls -ltr'
         // build the project and create a JAR file
         sh '''
-            cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
-            # Kill any running jar processes
-            pkill -f spring-boot-web.jar || true
-            rm -rf target || true
-            # Build the project
-            mvn clean package 
+           cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
+           # Kill any running jar
+           pkill -f spring-boot-web.jar || true
+           # Remove target folder as root
+           docker run --rm -v $(pwd):/app -w /app --user root harpreet2001/maven-abhishek-docker-agent:v3 rm -rf target
+           # Build project
+           mvn clean package
            '''
       }
     }
