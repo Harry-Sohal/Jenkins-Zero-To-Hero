@@ -2,12 +2,15 @@
 # But make sure to use the correct version of Java
 FROM eclipse-temurin:17-jdk-alpine
 
-# Simply the artifact path
-ARG artifact=target/spring-boot-web.jar
+# Install required tools
+RUN apk add --no-cache \
+    maven \
+    git \
+    docker-cli \
+    bash
 
-WORKDIR /opt/app
+WORKDIR /workspace
 
-COPY ${artifact} app.jar
+# Keep container alive for Jenkins
+CMD ["sleep", "infinity"]
 
-# This should not be changed
-ENTRYPOINT ["java","-jar","app.jar"]
