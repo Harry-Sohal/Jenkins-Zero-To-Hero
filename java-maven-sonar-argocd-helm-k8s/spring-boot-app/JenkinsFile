@@ -22,7 +22,7 @@ pipeline {
            # Kill any running jar
            pkill -f spring-boot-web.jar || true
            # Delete target folder safely
-           rm -rf target
+           rm -rf target || true
            # Build the project
            mvn clean package
            '''
