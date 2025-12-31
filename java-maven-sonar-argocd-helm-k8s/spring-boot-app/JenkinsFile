@@ -17,7 +17,16 @@ pipeline {
       steps {
         sh 'ls -ltr'
         // build the project and create a JAR file
-        sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean package'
+        sh '''
+            cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
+            # Kill any running jar processes
+            pkill -f spring-boot-web.jar || true
+            # Fix permissions and delete target folder
+            chmod -R 777 target || true
+            rm -rf target || true
+            # Build the project
+            mvn clean package 
+           '''
       }
     }
     stage('Static Code Analysis') {
