@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'harpreet2001/maven-abhishek-docker-agent:v3'
+      image 'harpreet2001/maven-abhishek-docker-agent:v4'
       args '-v /var/run/docker.sock:/var/run/docker.sock -u 0:0' // mount Docker socket to access the host's Docker daemon
       reuseNode true
     }
